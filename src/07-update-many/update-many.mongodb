@@ -1,0 +1,15 @@
+use("sample_training")
+
+db.zips.find({city: "CLEVELAND"})
+db.zips.updateMany(
+  //query - En este caso se esta usando como filtro.
+  {city: "CLEVELAND"},
+  // update - operators
+  {
+    //Con el operador $inc incrementamos la población en 1000 a todos los documentos que...
+    //... cumplan con el filtro del query.
+    $inc: {
+      pop: 1000 
+    }
+  }
+  )

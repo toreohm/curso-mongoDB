@@ -1,0 +1,26 @@
+use("platzi_store")
+
+//Usando $eq(equal) explícitamente
+db.inventory.find({qty: {$eq: 20}})
+//Usando $eq implicitamente
+db.inventory.find({qty: 20})
+
+//Buscando en documentos anidados
+db.inventory.find({"item.name": "cd"})
+
+//Buscando en documentos anidados con el operador $eq
+db.inventory.find({"item.name": {$eq: "cd"}})
+
+//El operador $ne(not equal) se usa de manera explícita
+db.inventory.find({qty: {$ne: 20}})
+
+//Se puede usar el operador $ne con update
+//En este ejemplo queremos que  todos los documentos cuyo qty no sea igual a 20
+//se incremente en 10
+db.inventory.updateMany(
+  // query - operators
+  {qty: {$ne: 20}},
+  // update - operators
+  {$inc: {
+    qty: 10
+  }})

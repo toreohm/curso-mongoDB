@@ -1,0 +1,16 @@
+use("sample_training")
+
+db.zips.find({city: "CLEVELAND"})
+db.zips.updateMany(
+  //query - En este caso se esta usando como filtro.
+  {city: "CLEVELAND"},
+  // update - operators
+  {
+    //Con el operador $unset podemos eliminar un field/campo que ya no se ocupe.
+    //En este caso se elimina el field de los documentos que cumplan con...
+    //... el filtro del query.
+    $unset: {
+      saludo_mx: "" 
+    }
+  }
+  )

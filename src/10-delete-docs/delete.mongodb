@@ -1,0 +1,8 @@
+use("platzi_store")
+
+//Eliminar un documento especificando su ID.
+//Si el ID es generado con mongoDB el filtro sería {_id: ObjectId("123456677")}
+db.products.deleteOne({_id: 1})
+
+//Queremos eliminar todos los registros/documentos que tenga el precio de 100.
+db.products.deleteMany({price: 100})

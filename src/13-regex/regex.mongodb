@@ -1,0 +1,22 @@
+use("platzi_store")
+
+//Usando expresiones regulares con el operador $regex
+db.inventory.find({"item.description": {$regex: /\n/}})
+
+/*Buscamos todos los documentos que tenga la palabra line
+en la descripción y que no sea case sensitive*/
+db.inventory.find({"item.description": {$regex: /LINE/i}})
+
+/*Buscamos todos los documentos que finalice con la palabra line
+en la descripción y que no sea case sensitive*/
+db.inventory.find({"item.description": {$regex: /LINE$/i}})
+
+/*Buscamos todos los documentos que inicie con la palabra single
+en la descripción y que no sea case sensitive*/
+db.inventory.find({"item.description": {$regex: /^single/i}})
+
+/*Buscamos todos los documentos que inicien con "s"
+en la descripción tomando en cuenta los saltos de linea (m - de multiline)
+y que no sea case sensitive (i)*/
+db.inventory.find({"item.description": {$regex: /^s/im}})
+

@@ -1,0 +1,25 @@
+use("platzi_store")
+//Para quitar un elemento de un array de un solo documento
+/*db.inventory.updateOne({_id: 4}, {
+  $pull: {
+    tags: "headphone"
+  }
+})*/
+//Pero tambien podemos hacer un update masivo con updatemany()
+//Aquí removemos un elemento de un array para todos los documentos.
+
+/*db.inventory.updateMany({}, {
+  $pull: {
+    tags: "book"
+  }
+}) */
+
+//Aquí removemos más un elemento de un array para todos los documentos
+
+db.inventory.updateMany({}, {
+  $pull: {
+    tags: {
+      $in: ["school", "appliance"]
+    }
+  }
+})

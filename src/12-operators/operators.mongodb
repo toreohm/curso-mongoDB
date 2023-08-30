@@ -1,0 +1,28 @@
+use("platzi_store")
+
+/*Operadores de comparación
+    • $gt (greater than)
+    • $gte (greater than or equal)
+    • $lt (less than)
+    • $lte (less than or equal) */
+
+//Busquedas usando operadores de comparación individualmente
+db.inventory.find({qty: {$gt: 20}})
+db.inventory.find({qty: {$gte: 20}})
+db.inventory.find({qty: {$lt: 20}})
+db.inventory.find({qty: {$lte: 20}})
+
+// Combinación de operadores 
+//Mayor o igual a 25 y menor o igual a 35
+db.inventory.find({qty: {$gte: 25, $lte: 35}})
+
+//Podemos hacer un "join", combinación de filtro con operadores de comparación
+/* Aquí estamos poniendo dos condicionales: item.name (un subdocumento) con 
+el valor de "ab" y los operadores de comparación: $gte y $lte.
+En este caso no hay ni un documento que cumpla con ambas condiciones*/
+db.inventory.find({"item.name": "ab", qty: {$gte: 20, $lte: 25}})
+
+/*Otro ejemplo usando los operadores $ne (not equal) $gte y $lte
+"Buscar los documentos cuyo field code en el subdocumento no sea igual a 123 y 
+que la cantidad (qty) sea mayor o igual a 20 y menor o igual a 25"*/
+db.inventory.find({"item.code": {$ne: "123"}, qty: {$gte: 20, $lte: 25}})

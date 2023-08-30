@@ -1,0 +1,21 @@
+use("platzi_store")
+
+db.monthlyBudget.find({spent: {$gte: 100}})
+
+//Podemos hacer la consulta anterior usando el expresive operator
+db.monthlyBudget.find({
+  $expr: {
+    /*el signo de pesos ($) en spent, se usa para seleccionar un campo
+    en específico */
+    $gte: ["$spent", 100]
+  }
+})
+
+//Con $expr, podemos comparar dos atributos/campos con el operador $gte
+//¿Cuales son los documentos en donde spent supera a budget?
+db.monthlyBudget.find({
+  $expr: {
+    $gt: ["$spent", "$budget"]
+  }
+})
+

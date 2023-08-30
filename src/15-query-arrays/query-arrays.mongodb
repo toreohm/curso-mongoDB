@@ -1,0 +1,42 @@
+use("platzi_store")
+
+//El operador $in significa que dentro de un array pueda obtener esos elementos 
+//que se especifican en la búsqueda. 
+//Con el operador $in se puede trabajar tanto con arrays como con objetos.
+//En el siguiente query $in se usa como se fuera un or.
+//Por lo que devuelve los documentos que tengan qty de 20 o 25.
+db.inventory.find({qty: {$in: [20, 25]}})
+
+//En este ejemplo buscamos valores dentro de un array
+db.inventory.find({tags: {$in: ["school", "book", "electronics"]}})
+
+//$nin es lo contrario a $in, es decir que no haya esos elementos.
+//En este query se busca los documentos cuyo field qty no tienen los valores 20 y 25.
+db.inventory.find({qty: {$nin: [20, 25]}})
+
+//Aquí buscamos los documentos en cuyo field tags el cual es un array...
+//... No tengan los valores "book" y "electronics"
+db.inventory.find({tags: {$nin: ["book", "electronics"]}})
+
+//Esto funciona a pesar de que "book" este dentro de un array
+db.inventory.find({tags: "book"})
+
+//En este caso funciona si y solo sí los valores coinciden exactamente en el mismo orden.
+db.inventory.find({tags: ["school", "book"]})
+
+//Ahora trabajaremos con el operador $all.
+//A diferencia del operador $in que se maneja como un or, $all es inclusivo, equivalente a un and.
+//Aqui en este ejemplo se busca los documentos que tengan ambos valores, 
+//sin importar el orden en que los tenga.
+db.inventory.find({tags: {$all: ["book", "school"]}})
+
+//$size - Con el operador $size podemos buscar que el tamaño del array sea de dos elementos
+db.inventory.find({tags: {$size: 2}})
+
+//$elemMatch - Nos sirve cuando tenemos un array de objetos.
+//Aqui buscamos los documentos que dentro del array results tengan un
+//objeto con el valor "xyz"
+db.survey.find({results: {$elemMatch: {product: "xyz"}}})
+
+//Le añadimos otro filtro indicando que el score sea mayor o igual a 7
+db.survey.find({results: {$elemMatch: {product: "xyz", score: {$gte: 7}}}})

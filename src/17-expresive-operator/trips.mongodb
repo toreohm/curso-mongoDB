@@ -1,0 +1,20 @@
+use("sample_training")
+
+//Podemos hacer una búsqueda y comparar dos campos (sus valores) con el 
+//operador $eq para ver cuales coinciden de la siguiente manera:
+db.trips.find({
+  $expr: {
+    $eq: ["$start station id", "$end station id"]
+  }
+}).count()
+
+//Reto, el mismo ejercicio anterior(cuantos han iniciado y finalizado en el
+//mismo punto) pero además, donde su duración fue mayor a "x" tiempo 
+db.trips.find({
+  $expr: {
+    $and: [
+      {$eq: ["$start station id", "$end station id"]},
+      {$gt: ["$tripduration", 1200]}
+      //{tripduration: {$gt: 400}}
+    ]}
+    }).count()

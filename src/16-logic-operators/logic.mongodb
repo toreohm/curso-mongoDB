@@ -1,0 +1,45 @@
+use("sample_training")
+
+//En este ejemplo la búsqueda ya es un AND (implicito) 
+//ya que son dos filtros(condiciones) a cumplir
+db.inspections.find({sector: {$regex: /tax/i}, result: {$regex: /unable/i}})
+db.inspections.find({sector: {$regex: /tax/i}, result: {$regex: /unable/i}}).count()
+
+//AND de forma explícita
+db.inspections.find({
+  $and: [
+    {sector: {$regex: /tax/i}},
+    {result: {$regex: /unable/i}}
+  ]
+}).count()
+
+//OR - Con que una condición se cumpla basta.
+db.inspections.find({
+  $or: [
+    {sector: {$regex: /tax/i}},
+    {result: {$regex: /unable/i}} 
+  ]
+})
+
+db.inspections.find({
+  $or: [
+    {sector: {$regex: /tax/i}},
+    {result: {$regex: /^unable/i}} 
+  ]
+}).count()
+
+//operador $nor - es todos los documentos que no incluyan los filtros especificados.
+db.inspections.find({
+  $nor: [
+    {sector: {$regex: /tax/i}},
+    {result: {$regex: /^unable/i}}
+  ]
+},
+//proyection
+{result: 1, _id: 0})
+
+//$not es un operador de negación
+db.inspections.find({
+  result: {$not: {$regex: /unable to/i}}
+})
+

@@ -1,0 +1,15 @@
+use("platzi_store")
+//id "64e93184e4cf364935708e08"
+
+db.productos.updateOne(
+  //query
+  {_id: ObjectId("64e93184e4cf364935708e08")}, 
+  //change => operators
+  {
+    $inc: {
+      //Incrementamos el precio en 100 unidades
+      price: 150     
+    }
+  })
+
+db.productos.find()

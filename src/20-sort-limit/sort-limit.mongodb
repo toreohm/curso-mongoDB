@@ -1,0 +1,12 @@
+use("sample_training")
+
+db.zips.find({pop: {$gte: 100}})
+
+//Para hacer un sort sería de la siguiente manera.
+// 1 es igual a ordenar de forma ascendente.
+// -1 es igual a ordenar de forma descendente.
+
+db.zips
+  .find({pop: {$gte: 100}})
+  .sort({pop: 1}) //Ascendente
+  .limit(3) //limitar a tres documentos la consulta

@@ -1,0 +1,16 @@
+use("sample_training")
+
+db.zips.find({city: "CLEVELAND"})
+db.zips.updateMany(
+  //query - En este caso se esta usando como filtro.
+  {city: "CLEVELAND"},
+  // update - operators
+  {
+    //Con el operador $rename podemos cambiar el nombre de un field/campo.
+    //En este caso cambiamos el nombre del field a los documentos que cumplan con...
+    //... el filtro del query.
+    $rename: {
+      saludo: "saludo_mx" 
+    }
+  }
+  )

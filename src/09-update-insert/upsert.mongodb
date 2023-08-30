@@ -1,0 +1,17 @@
+use("platzi_store")
+
+//upsert te identifica si se debe insertar o actualizar el documento (verifica si existe o no) 
+//En este caso no existe el registro que cumpla con el filtro.
+//Así que lo crea (insert) 
+db.iot.updateOne(
+{sensor: "A001", date: "2022-01-04"}, 
+{$push: {readings: 2323}},
+{upsert: true})
+
+/*Si lo hacemos por segunda vez con otro valor, upsert detecta que ya existe el registro 
+que cumple con el filtro (sensor A001 y la date especificada), 
+y por lo tanto lo actualiza (update).*/ 
+db.iot.updateOne(
+  {sensor: "A001", date: "2022-01-04"}, 
+  {$push: {readings: 10000}},
+  {upsert: true})

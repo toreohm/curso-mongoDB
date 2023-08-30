@@ -1,0 +1,29 @@
+use("sample_training")
+
+//Consulta a subdocumentos
+db.trips.findOne({"start station location.type": "Point"})
+
+//Podemos ir directamente a la posición de un array y hacer una consulta
+db.companies.find({
+  "relationships.0.person.last_name": "Zuckerberg"
+},
+//projection
+{name: 1, relationships: 1})
+
+//Ahora preguntamos cuantos jefes de compañias se llaman Mark
+db.companies.find({
+  "relationships.0.person.first_name": {$regex: /mark/i}
+},
+//projection
+{name: 1, relationships: 1}).count()
+
+//Ahora no solamente quiero buscar la posición 0 del array, sino todas las posiciones.
+db.companies.find({
+  relationships: {
+    $elemMatch: {
+      "person.first_name": "Mark"
+    }
+  }
+},
+//projection
+{name: 1, relationships: 1}).count()

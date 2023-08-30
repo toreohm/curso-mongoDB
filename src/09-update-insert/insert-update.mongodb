@@ -1,0 +1,12 @@
+use("platzi_store")
+
+db.iot.insertOne({sensor: "A001", date: "2022-01-03", readings: [1212]})
+
+db.iot.updateOne({sensor: "A001", date: "2022-01-03",}, 
+{$push: {readings: 2323}})
+
+//Podemos eliminar un elemento del array al inicio o al final
+// Con el valor 1 es al final o con el valor -1 es al inicio
+db.iot.updateOne({sensor: "A001", date: "2022-01-03",}, 
+{$pop: {readings: 1}})
+

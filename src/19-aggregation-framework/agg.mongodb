@@ -1,0 +1,16 @@
+use("sample_airbnb")
+
+db.listingsAndReviews.find({
+  amenities: "Wifi"
+},
+{price: 1, amenities: 1})
+
+//Hacemos la misma consulta anterior pero ahora usando aggregation framework.
+//[],[],[] funciona como pipelines y cada pipeline va a ser un proceso que
+//va a alimentar al anterior. Es decir... la salida de un pipeline es la entrada de otro
+db.listingsAndReviews.aggregate([
+  {$match: {amenities: "Wifi"}}, //find
+  {$project: {address: 1}}, //project
+  //Podemos empezar a hacer agrupaciones
+  {$group: {_id: "$address.country", count: {$sum: 1}}}
+])
